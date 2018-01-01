@@ -7,8 +7,13 @@ class Sql extends PDO {
     
     private $conn;
     
-    public function __construct() {
-        $this->conn = new PDO("mysql:dbname=treinamento;server=locahost", "root", "");
+    public function __construct() {        
+        try{
+            $this->conn = new PDO("mysql:dbname=treinamento;server=locahost", "root", "");
+        }catch(PDOException $e){
+            throw new \Exception("Erro ao conectar no banco de dados, contate o suporte<br>Código do erro: ".$e->getCode());
+            die;
+        }
     }
     
     private function setParams($statement, $parameters = array()){
